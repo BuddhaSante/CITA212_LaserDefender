@@ -4,46 +4,50 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-    EnemySpawner enemySpawner;
-    WaveConfigSO waveConfig;
-    List<Transform> waypoints;
-    int waypointIndex = 0;
+    EnemySpawner enemySpawner; // Reference to the enemy spawner script
+    WaveConfigSO waveConfig;    // Stores the configuration of the current wave
+    List<Transform> waypoints;  // Holds the waypoints for enemy pathing
+    int waypointIndex = 0;      // Current index of the waypoint to follow
     
     void Awake()
     {
+        // Finds the EnemySpawner component in the scene
         enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
-
     void Start()
     {
+        // Initializes the wave configuration and sets up waypoints
         waveConfig = enemySpawner.GetCurrentWave();
         waypoints = waveConfig.GetWaypoints();
-        transform.position = waypoints [waypointIndex].position;
+        transform.position = waypoints[waypointIndex].position; // Starts at the first waypoint
     }
 
-    
     void Update()
     {
+        // Moves the enemy along the designated path
         FollowPath();
     }
 
+    // Method to move the enemy towards the next waypoint
     void FollowPath()
     {
-        if(waypointIndex < waypoints.Count)
+        // If there are more waypoints to follow
+        if (waypointIndex < waypoints.Count)
         {
-            Vector3 targetPosition = waypoints[waypointIndex].position;
-            float delta = waveConfig.GetMoveSpeed() * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, delta);
-            if(transform.position == targetPosition)
+            Vector3 targetPosition = waypoints[waypointIndex].position; // Target position
+            float delta = waveConfig.GetMoveSpeed() * Time.deltaTime;   // Adjusts speed by frame time
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, delta); // Moves enemy
+
+            // When the enemy reaches the target position
+            if (transform.position == targetPosition)
             {
-                waypointIndex++;
+                waypointIndex++; // Advances to the next waypoint
             }
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroys the enemy when the path is completed
         }
     }
-
 }
