@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     Vector2 minBounds; // Minimum boundaries based on screen size
     Vector2 maxBounds; // Maximum boundaries based on screen size
 
+    Shooter shooter;
+
     void Start()
     {
         InitBounds(); // Initialize screen boundaries for player movement
@@ -52,6 +54,13 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         rawInput = value.Get<Vector2>(); // Gets movement input from the player
-        Debug.Log(rawInput); // Logs raw input for debugging
+    }
+
+    void OnFire(InputValue value)
+    {
+        if(shooter != null)
+        {
+            shooter.isFiring = value.isPressed;
+        }
     }
 }
