@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     Vector2 maxBounds; // Maximum boundaries based on screen size
 
     Shooter shooter;
+    void Awake()
+    {
+        shooter = GetComponent<Shooter>();
+    }
 
     void Start()
     {

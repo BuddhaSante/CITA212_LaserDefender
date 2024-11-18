@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
                     Instantiate(
                         currentWave.GetEnemyPrefab(0), // Gets the enemy prefab from the wave config
                         currentWave.GetStartingWaypoint().position, // Sets the start position
-                        Quaternion.identity, // No rotation
+                        Quaternion.Euler(0,0,180), // No rotation
                         transform // Sets this object as the parent
                     );
                     
